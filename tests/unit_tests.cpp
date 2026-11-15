@@ -1,7 +1,7 @@
 // Self-contained unit tests (no framework). Exit code 0 = all passed.
 //
 // The one rule these tests guard: whatever goes in must come out bit-exact,
-// and damaged archives must be rejected with apx::Error — never a crash and
+// and damaged archives must be rejected with apx::Error, never a crash and
 // never silently wrong output.
 #include <cstdio>
 #include <cstdlib>

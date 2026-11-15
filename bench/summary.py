@@ -32,7 +32,7 @@ def total(tool, names):
 
 def table(title, names):
     print(f"### {title}\n")
-    print("| Архиватор | Размер, байт | % от исходного | Сжатие, МиБ/с | Распаковка, МиБ/с | Память, МиБ |")
+    print("| Archiver | Size, bytes | % of original | Compress, MiB/s | Decompress, MiB/s | Memory, MiB |")
     print("|---|---:|---:|---:|---:|---:|")
     res = [(t, total(t, names)) for t in tools]
     for t, v in sorted((x for x in res if x[1]), key=lambda x: x[1][1]):
@@ -41,19 +41,19 @@ def table(title, names):
     print()
 
 
-table(f"Silesia, {len(files)} файлов, сумма", files)
+table(f"Silesia, {len(files)} files, total", files)
 for s in sorted(SINGLE):
     table(s, [s])
 
 ref = [t for t in ("apixel", "7z-ultra", "bzip3-b32", "bsc-b32-e2", "zstd-22-long") if t in data]
-print("### По файлам, байт\n")
-print("| Файл | " + " | ".join(ref) + " | apixel к 7z-ultra |")
+print("### Per file, bytes\n")
+print("| File | " + " | ".join(ref) + " | apixel vs 7z-ultra |")
 print("|---|" + "---:|" * (len(ref) + 1))
 wins = 0
 allf = files + sorted(SINGLE)
 for n in allf:
-    cells = [f"{int(data[t][n]['size']):,}".replace(",", " ") if n in data[t] else "—" for t in ref]
+    cells = [f"{int(data[t][n]['size']):,}".replace(",", " ") if n in data[t] else "-" for t in ref]
     a, z = int(data["apixel"][n]["size"]), int(data["7z-ultra"][n]["size"])
     wins += a < z
     print(f"| {n} | " + " | ".join(cells) + f" | {100 * (a - z) / z:+.1f}% |")
-print(f"\nApixel меньше 7-Zip Ultra в {wins} файлах из {len(allf)}.")
+print(f"\nApixel is smaller than 7-Zip Ultra on {wins} files out of {len(allf)}.")

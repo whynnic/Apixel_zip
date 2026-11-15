@@ -1,4 +1,4 @@
-// Stage ARM64 — reversible filter for AArch64 machine code (BL transform).
+// Stage ARM64: reversible filter for AArch64 machine code (BL transform).
 //
 // Branch with Link (BL) instructions carry a 26-bit signed immediate (imm26)
 // representing the target offset in 4-byte words. In compiled binaries, calls

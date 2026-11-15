@@ -1,4 +1,4 @@
-// Stage X86 — reversible filter for x86/x86-64 machine code ("E8/E9 transform").
+// Stage X86: reversible filter for x86/x86-64 machine code ("E8/E9 transform").
 //
 // CALL (E8) and JMP (E9) instructions carry a 32-bit target *relative* to the
 // instruction, so calls to the same function from different places look

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# bench/eval_model.sh — Model evaluator for CM1 experiments (Task T5.1).
+# bench/eval_model.sh: Model evaluator for CM1 experiments (Task T5.1).
 #
 # Evaluates stage_cm1 on BWT images of the tuning and holdout corpus sets.
 # Compiles build-eval (Release, -DAPIXEL_TUNE=ON) in the specified worktree,

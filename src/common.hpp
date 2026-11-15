@@ -1,4 +1,4 @@
-// Apixel v2 — common types and small helpers shared by every module.
+// Apixel v2: common types and small helpers shared by every module.
 //
 // Rules that hold for the whole code base:
 //  * Anything that influences decoding uses integers / fixed point only.

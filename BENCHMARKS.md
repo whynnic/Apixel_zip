@@ -1,19 +1,19 @@
-# Apixel v2 — результаты испытаний
+# Apixel v2: benchmark results
 
-## 11 ноября 2026: ПК автора, 1 поток (актуально)
+## 11 November 2026: author's PC, 1 thread (current)
 
-Стенд `bench/bench.py`, CSV `bench/results/2026-11-11_1t.csv`, таблицы — `bench/summary.py`. Машина: AMD Ryzen 5 8600G
-(Zen 4), все инструменты в 1 поток, каждая распаковка сверена с оригиналом. Версии: apixel 2.0.0-dev (`-T 1`, блок 32 МиБ;
-`apixel-nv` — `--no-verify`), 7-Zip 26.03, xz 5.8.3, zstd 1.5.7, brotli 1.1.0, bzip3 1.5.4, zpaq 7.15.
-Не стоят на ПК: bsc (см. замер 10.11 ниже), Kanzi, paq8px. Часть «12 потоков» ещё не снята.
+Harness `bench/bench.py`, CSV `bench/results/2026-11-11_1t.csv`, tables from `bench/summary.py`. Machine: AMD Ryzen 5 8600G
+(Zen 4), all tools in 1 thread, every decompression checked against the original. Versions: apixel 2.0.0-dev (`-T 1`, 32 MiB block;
+`apixel-nv` is `--no-verify`), 7-Zip 26.03, xz 5.8.3, zstd 1.5.7, brotli 1.1.0, bzip3 1.5.4, zpaq 7.15.
+Not installed on the PC: bsc (see the 10 November measurement below), Kanzi, paq8px. The "12 threads" part has not been taken yet.
 
-**Итог: 7-Zip Ultra побеждён** — Silesia −5,5 %, enwik8 −10,9 %, 10 файлов из 13, сжатие в 2,6 раза быстрее
-(в 4,7 без проверки на лету). Главные соперники теперь zpaq -m5 (на 15,1 % меньше нас, в 10–18 раз медленнее),
-bzip3 (на enwik8 меньше нас на 0,8 %) и bsc; для режима fast — zstd и brotli.
+**Bottom line: 7-Zip Ultra is beaten**: Silesia −5.5%, enwik8 −10.9%, 10 files out of 13, compression 2.6 times faster
+(4.7 times without on-the-fly verification). The main rivals are now zpaq -m5 (15.1% smaller than us, 10-18 times slower),
+bzip3 (on enwik8 it is 0.8% smaller than us) and bsc; for fast mode, zstd and brotli.
 
-#### Silesia, 12 файлов, сумма
+#### Silesia, 12 files, total
 
-| Архиватор | Размер, байт | % от исходного | Сжатие, МиБ/с | Распаковка, МиБ/с | Память, МиБ |
+| Archiver | Size, bytes | % of original | Compress, MiB/s | Decompress, MiB/s | Memory, MiB |
 |---|---:|---:|---:|---:|---:|
 | zpaq-m5 | 39 113 413 | 18.46 | 0.53 | 0.5 | 840 |
 | apixel | 46 086 155 | 21.75 | 5.08 | 9.8 | 272 |
@@ -28,7 +28,7 @@ bzip3 (на enwik8 меньше нас на 0,8 %) и bsc; для режима f
 
 #### enwik8
 
-| Архиватор | Размер, байт | % от исходного | Сжатие, МиБ/с | Распаковка, МиБ/с | Память, МиБ |
+| Archiver | Size, bytes | % of original | Compress, MiB/s | Decompress, MiB/s | Memory, MiB |
 |---|---:|---:|---:|---:|---:|
 | zpaq-m5 | 19 625 075 | 19.63 | 0.52 | 0.5 | 966 |
 | bzip3-b32 | 21 916 449 | 21.92 | 11.05 | 9.8 | 198 |
@@ -41,9 +41,9 @@ bzip3 (на enwik8 меньше нас на 0,8 %) и bsc; для режима f
 | brotli-11 | 25 742 001 | 25.74 | 0.54 | 221.3 | 203 |
 | zstd-19 | 26 944 227 | 26.94 | 1.75 | 491.6 | 197 |
 
-#### По файлам, байт
+#### Per file, bytes
 
-| Файл | apixel | 7z-ultra | bzip3-b32 | zstd-22-long | apixel к 7z-ultra |
+| File | apixel | 7z-ultra | bzip3-b32 | zstd-22-long | apixel vs 7z-ultra |
 |---|---:|---:|---:|---:|---:|
 | dickens | 2 270 742 | 2 831 111 | 2 233 934 | 2 849 067 | -19.8% |
 | mozilla | 15 912 536 | 13 342 812 | 15 931 982 | 14 912 855 | +19.3% |
@@ -59,27 +59,27 @@ bzip3 (на enwik8 меньше нас на 0,8 %) и bsc; для режима f
 | xml | 385 630 | 455 003 | 405 877 | 451 543 | -15.2% |
 | enwik8 | 22 088 794 | 24 799 182 | 21 916 449 | 25 272 471 | -10.9% |
 
-Apixel меньше 7-Zip Ultra в 10 файлах из 13.
+Apixel is smaller than 7-Zip Ultra on 10 files out of 13.
 
 
-## 10 ноября 2026: облачная песочница (первый замер)
+## 10 November 2026: cloud sandbox (first measurement)
 
-Дата: 10 ноября 2026. Стенд: `bench/bench.py`, исходные данные в `bench/results/*.csv`,
-таблицы ниже собраны скриптом `bench/summary.py`.
+Date: 10 November 2026. Harness: `bench/bench.py`, raw data in `bench/results/*.csv`,
+the tables below were assembled by `bench/summary.py`.
 
-**Условия.** Все инструменты в один поток. Машина — облачная песочница, 1 ядро Intel Xeon 2,1 ГГц, 4 ГБ
-памяти; на настольном процессоре абсолютные скорости будут выше. Каждая распаковка сверена с оригиналом
-по SHA-256. Разные инструменты замерялись в разных запусках, шум времени на этой машине — до 10 %,
-поэтому скорости сравнимы только по порядку величины; размеры точные.
+**Conditions.** All tools in one thread. The machine is a cloud sandbox, 1 Intel Xeon core at 2.1 GHz, 4 GB
+of memory; on a desktop CPU the absolute speeds will be higher. Every decompression was checked against the original
+by SHA-256. Different tools were measured in different runs; timing noise on this machine is up to 10%,
+so speeds are comparable only in order of magnitude; the sizes are exact.
 
-**Версии и ключи.** apixel 2.0.0-dev (`-T 1`, блок 32 МиБ; `apixel-nv` — с `--no-verify`);
+**Versions and flags.** apixel 2.0.0-dev (`-T 1`, 32 MiB block; `apixel-nv` is with `--no-verify`);
 7-Zip 23.01 (`a -t7z -mx=9 -mmt=1`); zstd 1.5.5 (`-19 -T1`; `--ultra -22 --long=27 -T1`);
-bzip3 1.4.0 (`-b 32 -j 1`); bsc 3.3.x из исходников (`-b32 -t -T`, второй вариант с `-e2`).
-Не запускались: Kanzi, Brotli, xz, zpaq, paq8px.
+bzip3 1.4.0 (`-b 32 -j 1`); bsc 3.3.x from source (`-b32 -t -T`, second variant with `-e2`).
+Not run: Kanzi, Brotli, xz, zpaq, paq8px.
 
-### Silesia, 12 файлов, сумма
+### Silesia, 12 files, total
 
-| Архиватор | Размер, байт | % от исходного | Сжатие, МиБ/с | Распаковка, МиБ/с | Память, МиБ |
+| Archiver | Size, bytes | % of original | Compress, MiB/s | Decompress, MiB/s | Memory, MiB |
 |---|---:|---:|---:|---:|---:|
 | apixel-nv | 46 086 155 | 21.75 | 5.99 | 7.4 | 207 |
 | apixel | 46 086 155 | 21.75 | 3.48 | 7.6 | 271 |
@@ -92,7 +92,7 @@ bzip3 1.4.0 (`-b 32 -j 1`); bsc 3.3.x из исходников (`-b32 -t -T`, �
 
 ### enwik8
 
-| Архиватор | Размер, байт | % от исходного | Сжатие, МиБ/с | Распаковка, МиБ/с | Память, МиБ |
+| Archiver | Size, bytes | % of original | Compress, MiB/s | Decompress, MiB/s | Memory, MiB |
 |---|---:|---:|---:|---:|---:|
 | bzip3-b32 | 21 916 486 | 21.92 | 7.86 | 6.8 | 198 |
 | bsc-b32-e2 | 21 983 674 | 21.98 | 14.06 | 16.7 | 191 |
@@ -103,9 +103,9 @@ bzip3 1.4.0 (`-b 32 -j 1`); bsc 3.3.x из исходников (`-b32 -t -T`, �
 | zstd-22-long | 25 333 695 | 25.33 | 0.77 | 400.7 | 772 |
 | zstd-19 | 26 954 633 | 26.95 | 1.04 | 361.2 | 188 |
 
-### По файлам, байт
+### Per file, bytes
 
-| Файл | apixel | 7z-ultra | bzip3-b32 | bsc-b32-e2 | zstd-22-long | apixel к 7z-ultra |
+| File | apixel | 7z-ultra | bzip3-b32 | bsc-b32-e2 | zstd-22-long | apixel vs 7z-ultra |
 |---|---:|---:|---:|---:|---:|---:|
 | dickens | 2 270 742 | 2 831 143 | 2 233 954 | 2 259 134 | 2 849 381 | -19.8% |
 | mozilla | 15 912 536 | 13 342 844 | 15 931 982 | 16 001 774 | 14 967 572 | +19.3% |
@@ -121,39 +121,39 @@ bzip3 1.4.0 (`-b 32 -j 1`); bsc 3.3.x из исходников (`-b32 -t -T`, �
 | xml | 385 630 | 455 035 | 405 877 | 393 180 | 453 173 | -15.3% |
 | enwik8 | 22 088 794 | 24 862 653 | 21 916 486 | 21 983 674 | 25 333 695 | -11.2% |
 
-Apixel меньше 7-Zip Ultra в 10 файлах из 13.
+Apixel is smaller than 7-Zip Ultra on 10 files out of 13.
 
-## Выводы
+## Conclusions
 
-1. **Размер.** Apixel на 5,5 % меньше 7-Zip Ultra на Silesia и на 11,2 % меньше на enwik8. В своём классе
-   (BWT) он на 1,3 % меньше bzip3 и на 1,5 % меньше bsc -e2 на Silesia, но на enwik8 проигрывает bzip3 0,8 %.
-2. **Скорость сжатия.** 6,0 МиБ/с без проверки на лету и 3,5 МиБ/с с ней: в 3,6 и в 2,1 раза быстрее
-   7-Zip Ultra. Цель «в 3 раза быстрее при равном числе потоков» выполнена только без проверки.
-   bsc -e2 быстрее Apixel в 2,7 раза, bzip3 — в 1,5 раза.
-3. **Распаковка.** 7,4 МиБ/с против 70,7 у 7-Zip. Это слабое место всего класса BWT + CM.
-4. **Где проигрываем 7-Zip:** mozilla (исполняемые файлы Alpha), sao (каталог звёзд, записи фиксированной
-   длины), samba (исходники вперемешку с бинарными данными). Проценты — в таблице по файлам.
-5. **Профиль похож на v1:** выигрыш у 7-Zip в 10 файлах из 13 при проигрыше на бинарных данных
-   (у v1 было 10 из 16). Это довод в пользу гипотезы H1: v1 была близка к BWT.
+1. **Size.** Apixel is 5.5% smaller than 7-Zip Ultra on Silesia and 11.2% smaller on enwik8. In its class
+   (BWT) it is 1.3% smaller than bzip3 and 1.5% smaller than bsc -e2 on Silesia, but on enwik8 it loses to bzip3 by 0.8%.
+2. **Compression speed.** 6.0 MiB/s without on-the-fly verification and 3.5 MiB/s with it: 3.6 and 2.1 times faster
+   than 7-Zip Ultra. The goal "3 times faster at the same thread count" is met only without verification.
+   bsc -e2 is 2.7 times faster than Apixel, bzip3 1.5 times faster.
+3. **Decompression.** 7.4 MiB/s versus 70.7 for 7-Zip. This is the weak point of the entire BWT + CM class.
+4. **Where we lose to 7-Zip:** mozilla (Alpha executables), sao (a star catalog, fixed-length records),
+   samba (source mixed with binary data). The percentages are in the per-file table.
+5. **The profile resembles v1:** a win over 7-Zip on 10 files out of 13, with a loss on binary data
+   (v1 had 10 out of 16). This supports hypothesis H1: v1 was close to BWT.
 
-## Что пробовали в модели CM1 (8 файлов для настройки, 64 МБ)
+## What was tried in the CM1 model (8 files for tuning, 64 MB)
 
-| Изменение | Размер | Решение |
+| Change | Size | Decision |
 |---|---:|---|
-| исходная модель | 18 861 998 | — |
-| пределы адаптации ×0,25…×4, скорость миксера, вес и скорость APM | ±0,05 % | оптимум плоский, оставлено |
-| контексты локальной частоты (окно 32 символа) для решений A и B | −0,22 % | **принято** |
-| второй APM по предыдущему символу | −0,07 % | отклонено: −17 % скорости |
-| второй миксер литералов по предыдущему символу | −0,15 % | отклонено: −25 % скорости |
-| прямое побитовое кодирование всех символов вместо A/B/L | −0,26 % | отклонено: в 1,7 раза медленнее |
-| простая модель в стиле BCM/bzip3 (фиксированные веса + линейный SSE) | ±0,00 % | на тексте лучше на 1,1 %, на записях хуже на 2 % |
-| решения «да/нет» по 4, 8, 16 рангам давности вместо литералов | +1,1…+2,4 % | отклонено |
-| точность stretch 16 бит вместо 12 | +0,04 % | отклонено |
-| удаление 6 таблиц из 18 по результатам абляции (история исходов для A, три контекста B, медленный порядок 0) | +0,025 % на 4 файлах настройки, +0,04 % на всём Silesia | **принято**: меньше работы на каждое решение; выигрыш в скорости на этой машине не отличим от шума |
-| фильтр записей `rec` (T3b, Argon A04, 2026-11-11): детектор периода + транспозиция столбцов / с дельтой перед BWT | sao (R=28 найден верно) +2,9 % / +9,9 %; mr (R=2) +4,7 % / +2,9 %; x-ray (R=2) +7,5 % / +7,2 %; mozilla (R=24) +49 % / +68 % | отклонено: перестановка столбцов разрушает контексты BWT; проба на 1 МиБ правильно отвергала фильтр, архивы не менялись. Код в ветке `argon/a04` |
+| baseline model | 18 861 998 | - |
+| adaptation limits ×0.25…×4, mixer rate, APM weight and rate | ±0.05% | the optimum is flat, left as-is |
+| local-frequency contexts (32-symbol window) for decisions A and B | −0.22% | **accepted** |
+| a second APM on the previous symbol | −0.07% | rejected: −17% speed |
+| a second literal mixer on the previous symbol | −0.15% | rejected: −25% speed |
+| direct bit-wise coding of all symbols instead of A/B/L | −0.26% | rejected: 1.7 times slower |
+| a simple BCM/bzip3-style model (fixed weights + linear SSE) | ±0.00% | 1.1% better on text, 2% worse on records |
+| "yes/no" decisions on 4, 8, 16 recency ranks instead of literals | +1.1…+2.4% | rejected |
+| stretch precision 16 bits instead of 12 | +0.04% | rejected |
+| removal of 6 tables out of 18 after ablation (outcome history for A, three B contexts, slow order 0) | +0.025% on 4 tuning files, +0.04% on all of Silesia | **accepted**: less work per decision; the speed gain on this machine is indistinguishable from noise |
+| record filter `rec` (T3b, experimental branch, 2026-11-11): period detector + column transposition / with delta before BWT | sao (R=28 found correctly) +2.9% / +9.9%; mr (R=2) +4.7% / +2.9%; x-ray (R=2) +7.5% / +7.2%; mozilla (R=24) +49% / +68% | rejected: column permutation destroys BWT contexts; a 1 MiB probe correctly rejected the filter, archives were unchanged. Code is on an experimental branch |
 
-Фильтр x86 (E8/E9) на первых 32 МиБ файла: ooffice −15,4 %, системные библиотеки Linux −4,7 %,
-mozilla +0,7 % (там нет x86-кода), остальные ±0,1 %. Включается при плотности кандидатов не ниже 1 на 200 байт.
+The x86 filter (E8/E9) on the first 32 MiB of the file: ooffice −15.4%, Linux system libraries −4.7%,
+mozilla +0.7% (there is no x86 code there), the rest ±0.1%. Enabled when the candidate density is at least 1 per 200 bytes.
 
-Отложенные данные (не участвовали в настройке): enwik8  mozilla  nci  samba  webster. Итог на enwik8:
-22 220 925 (первая версия) → 22 088 794 (текущая).
+Held-out data (did not take part in tuning): enwik8  mozilla  nci  samba  webster. Result on enwik8:
+22 220 925 (first version) → 22 088 794 (current).

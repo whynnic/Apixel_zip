@@ -1,7 +1,7 @@
 # Apixel
 
 Experimental lossless archiver: BWT + context mixing, block-parallel, deterministic.
-**Status: research prototype, archive format version 0 — the format will change and old archives may stop
+**Status: research prototype, archive format version 0; the format will change and old archives may stop
 reading. Do not use for data you cannot afford to lose.**
 
 ## Results (1 thread, Ryzen 5 8600G, 2026-11-11)
@@ -49,5 +49,5 @@ Not in the repository. `bench/get_corpora.sh` downloads Silesia and enwik8 and c
 ## License
 
 Apixel is licensed under the Apache License 2.0, see [LICENSE](LICENSE) and [NOTICE](NOTICE).
-Third-party: `third_party/libsais` — libsais 2.12.1 by Ilya Grebnov, Apache-2.0 (`third_party/libsais/LICENSE`).
+Third-party: `third_party/libsais`: libsais 2.12.1 by Ilya Grebnov, Apache-2.0 (`third_party/libsais/LICENSE`).
 `src/xxh64.hpp` is an independent implementation of the XXH64 specification.

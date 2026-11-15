@@ -1,4 +1,4 @@
-// Stage BWT — Burrows-Wheeler transform of one block via libsais.
+// Stage BWT: Burrows-Wheeler transform of one block via libsais.
 //
 //   encode: in[n] -> out[n], params = varint primary_index (1..n)
 //   decode: the inverse; the output has the same size as the input.

@@ -1,5 +1,5 @@
 #!/bin/bash
-# make_seeds.sh — Generates seed corpora for libFuzzer targets using apixel and seed_gen.
+# make_seeds.sh: Generates seed corpora for libFuzzer targets using apixel and seed_gen.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

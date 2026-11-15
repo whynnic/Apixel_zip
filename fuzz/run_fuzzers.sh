@@ -1,5 +1,5 @@
 #!/bin/bash
-# run_fuzzers.sh [seconds-per-target] [targets...] — runs libFuzzer targets ONE AT A TIME, each on all cores
+# run_fuzzers.sh [seconds-per-target] [targets...]: runs libFuzzer targets ONE AT A TIME, each on all cores
 # (libFuzzer -fork=$JOBS, default nproc), so every target finishes fast. Default 600 s per target.
 # fuzz_cm1_decode_big (1 MiB output cap, slow) runs only when named explicitly.
 set -euo pipefail

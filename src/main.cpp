@@ -1,4 +1,4 @@
-// apixel — command-line front end.
+// apixel: command-line front end.
 #include <unistd.h>
 
 #include <chrono>

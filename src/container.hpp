@@ -1,5 +1,5 @@
 // The .apx container: a self-describing sequence of frames.
-// The byte-level specification lives in ARCHITECTURE.md ("Формат контейнера").
+// The byte-level specification lives in ARCHITECTURE.md (".apx container format").
 #pragma once
 
 #include <cstdio>
@@ -98,7 +98,7 @@ struct StreamStats {
     u64 stored_blocks = 0;
 };
 
-// The archive bytes depend only on the input and block_size — never on the
+// The archive bytes depend only on the input and block_size, never on the
 // number of threads or the memory limit.
 StreamStats compress_stream(Input& in, Output& out, const CompressOptions& opt);
 

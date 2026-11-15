@@ -1,4 +1,4 @@
-// Stage CM1 — context-mixing entropy coder for BWT output.
+// Stage CM1: context-mixing entropy coder for BWT output.
 //
 // BWT output consists of long stretches dominated by one or two symbols, so
 // each symbol is coded as a short chain of binary decisions:

@@ -1,5 +1,5 @@
 #!/bin/sh
-# bench/get_corpora.sh — download and verify benchmark corpora for Apixel (POSIX sh).
+# bench/get_corpora.sh: download and verify benchmark corpora for Apixel (POSIX sh).
 #
 # Sources:
 #   - Silesia: https://sun.aei.polsl.pl/~sdeor/corpus/silesia.zip
