@@ -1,0 +1,27 @@
+# build trees (build/, build-asan/, build-<agent>/ ...)
+build*/
+cmake-build-*/
+compile_commands.json
+
+# archives and data: corpora are downloaded by bench/get_corpora.sh, never committed
+*.apx
+*.bwt
+*.tmp
+corpus/
+*.zip
+*.zst
+*.7z
+*.xz
+*.bz2
+*.bz3
+*.zpaq
+*.br
+
+# python / editors / local env
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.env
+.env.*
+*.swp
